@@ -22,9 +22,10 @@ function subtractFee(input) {
   const firstGreater = intervals.find((value) => value >= input);
   const indexOfFirstGreater = intervals.indexOf(firstGreater);
   const feeSubtraction = parseFloat((input - fees[indexOfFirstGreater - 1]).toFixed(2));
-  console.log("subtractFee:", "input:", input, "input - fee:", feeSubtraction);
+  const fee= parseFloat((input - feeSubtraction).toFixed(2));
+  console.log("subtractFee:", "input:", input,"| fee:",fee, "| input - fee:", feeSubtraction);
 
-  return feeSubtraction;
+  return [fee,feeSubtraction];
 }
 
 function sumFee(input) {
@@ -44,11 +45,16 @@ function sumFee(input) {
   }
   const indexOfLastElement = intervals.indexOf(intervals[intervals.length - 1]);
   const feeSum = parseFloat((input + fees[indexOfLastElement]).toFixed(2));
-  console.log("sumFee:", "input:", input, "input+fee:", feeSum);
-  return feeSum;
+  
+  const fee = parseFloat((feeSum - input).toFixed(2))
+  console.log("sumFee:", "input:", input,"| fee:",fee, "| input+fee:", feeSum);
+  return [fee,feeSum];
 }
 
 
 const number = 0.31;
-sumFee(number);
-subtractFee(number);
+
+const sum=sumFee(number);
+const subtract=subtractFee(number);
+
+console.log(sum,subtract)
