@@ -48,13 +48,43 @@ function sumFee(input) {
   
   const fee = parseFloat((feeSum - input).toFixed(2))
   console.log("sumFee:", "input:", input,"| fee:",fee, "| input+fee:", feeSum);
-  return [fee,feeSum];
+  return [feeSum];
 }
 
 
-const number = 0.31;
+function listaInt (){
+let listaCents =[]
 
-const sum=sumFee(number);
-const subtract=subtractFee(number);
+for (let i = 0; i<10;i= i+0.01 ){
+  let cents = parseFloat(i.toFixed(2))
+  listaCents.push(cents);
+}
+// console.log(listaCents)
+ return listaCents
+}
+function encontrarValoresNaoComuns(arr1, arr2) {
+  // Filtra os valores que estão em arr1, mas não em arr2, e vice-versa
+  const resultado = [
+      ...arr1.filter(valor => !arr2.includes(valor)),
+      ...arr2.filter(valor => !arr1.includes(valor))
+  ];
+  console.log(resultado)
+  return resultado;
+}
 
-console.log(sum,subtract)
+function calculaValoresInexistentes(){
+  const lista = listaInt()
+  let listaTaxa = []
+
+  for (let i = 0; i< lista.length; i++){
+    let calculos = sumFee(lista[i])
+    listaTaxa.push(...calculos)
+  }
+  console.log("calculaTudo")
+  console.log(listaTaxa)
+  
+  console.log(lista)
+  encontrarValoresNaoComuns(lista,listaTaxa)
+}
+
+calculaValoresInexistentes()
