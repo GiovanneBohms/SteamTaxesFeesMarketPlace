@@ -52,10 +52,10 @@ function sumFee(input) {
 }
 
 
-function listaInt (){
+function listaInt (alvo){
 let listaCents =[]
 
-for (let i = 0; i<10;i= i+0.01 ){
+for (let i = 0; i<alvo;i= i+0.01 ){
   let cents = parseFloat(i.toFixed(2))
   listaCents.push(cents);
 }
@@ -63,28 +63,28 @@ for (let i = 0; i<10;i= i+0.01 ){
  return listaCents
 }
 function encontrarValoresNaoComuns(arr1, arr2) {
-  // Filtra os valores que estão em arr1, mas não em arr2, e vice-versa
   const resultado = [
       ...arr1.filter(valor => !arr2.includes(valor)),
       ...arr2.filter(valor => !arr1.includes(valor))
   ];
-  console.log(resultado)
   return resultado;
 }
 
 function calculaValoresInexistentes(){
-  const lista = listaInt()
+  const lista = listaInt(0.25)
   let listaTaxa = []
 
   for (let i = 0; i< lista.length; i++){
     let calculos = sumFee(lista[i])
     listaTaxa.push(...calculos)
   }
-  console.log("calculaTudo")
+  console.log("calcula Taxa")
   console.log(listaTaxa)
-  
-  console.log(lista)
-  encontrarValoresNaoComuns(lista,listaTaxa)
+
+ const valoresProibidos = encontrarValoresNaoComuns(lista,listaTaxa)
+ console.log("valores proibidos:")
+ console.log(valoresProibidos)
+ 
 }
 
 calculaValoresInexistentes()
