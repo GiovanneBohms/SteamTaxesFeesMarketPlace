@@ -55,7 +55,7 @@ function sumFee(input) {
 function listaInt (alvo){
 let listaCents =[]
 
-for (let i = 0; i<alvo;i= i+0.01 ){
+for (let i = 0.01; i<alvo;i= i+0.01 ){
   let cents = parseFloat(i.toFixed(2))
   listaCents.push(cents);
 }
@@ -70,21 +70,56 @@ function encontrarValoresNaoComuns(arr1, arr2) {
   return resultado;
 }
 
-function calculaValoresInexistentes(){
-  const lista = listaInt(0.25)
-  let listaTaxa = []
+//encapsulando código;
+function calculaValoresInexistentes(start) {
+  function sumFee(input) {
+    let intervals = [0.19];
+    let fees = [0.02, 0.03, 0.04, 0.06, 0.07, 0.09];
 
-  for (let i = 0; i< lista.length; i++){
-    let calculos = sumFee(lista[i])
-    listaTaxa.push(...calculos)
+    while (input > intervals[intervals.length - 1]) {
+      intervals.push(parseFloat((intervals[intervals.length - 1] + 0.1).toFixed(2)));
+    }
+
+    while (intervals.length > fees.length) {
+      const lastElement = fees[fees.length - 1];
+      fees.push(parseFloat((lastElement + (fees.length % 2 === 0 ? 0.01 : 0.02)).toFixed(2)));
+    }
+
+    const indexOfLastElement = intervals.indexOf(intervals[intervals.length - 1]);
+    return [parseFloat((input + fees[indexOfLastElement]).toFixed(2))];
   }
-  console.log("calcula Taxa")
-  console.log(listaTaxa)
 
- const valoresProibidos = encontrarValoresNaoComuns(lista,listaTaxa)
- console.log("valores proibidos:")
- console.log(valoresProibidos)
- 
+  function listaInt(alvo) {
+    let listaCents = [];
+    for (let i = 1; i <= alvo * 100; i++) {  
+      listaCents.push(i / 100);  
+    }
+    return listaCents;
+  }
+
+  function encontrarValoresNaoComuns(arr1, arr2) {
+    console.log(arr1)
+    console.log(arr2)
+    return [
+      ...arr1.filter(valor => !arr2.includes(valor)),
+      ...arr2.filter(valor => !arr1.includes(valor))
+    ];
+  }
+
+
+  const lista = listaInt(start);
+  let listaTaxa = lista.flatMap(sumFee);
+
+  let valoresProibidos = encontrarValoresNaoComuns(lista, listaTaxa);
+  let indiceParaExclusao = valoresProibidos.findIndex(valor => valor === start+0.01);
+  console.log(valoresProibidos)
+  if (indiceParaExclusao !== -1) {
+    valoresProibidos.splice(indiceParaExclusao); // Remove tudo a partir do índice
+  }
+  console.log("rastreando valor proibido:",start)
+  console.log("Índice para exclusão:", indiceParaExclusao);
+  console.log("Valores proibidos após remoção:", valoresProibidos);
 }
 
-calculaValoresInexistentes()
+calculaValoresInexistentes(0.33);
+
