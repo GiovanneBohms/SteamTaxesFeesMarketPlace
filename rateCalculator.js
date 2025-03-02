@@ -59,7 +59,7 @@ for (let i = 0.01; i<alvo;i= i+0.01 ){
   let cents = parseFloat(i.toFixed(2))
   listaCents.push(cents);
 }
-// console.log(listaCents)
+
  return listaCents
 }
 
@@ -78,9 +78,7 @@ function calculaValoresInexistentes(start) {
     const indexOfLastElement = intervals.indexOf(intervals[intervals.length - 1]);
     return [parseFloat((input + fees[indexOfLastElement]).toFixed(2))];
   }
-
-  function listaCash
-(alvo) {
+  function listaCash(alvo) {
     let listaCents = [];
     for (let i = 1; i <= alvo * 100; i++) {  
       listaCents.push(i / 100);  
@@ -88,35 +86,27 @@ function calculaValoresInexistentes(start) {
     return listaCents;
   }
 
-  const lista = listaCash
-(start);
-  let listaTaxa = lista.flatMap(sumFee);
-
   function encontrarValoresFaltantes(array) {
     let faltantes = [];
-    
     for (let i = 0; i < array.length - 1; i++) {
         let atual = array[i];
         let proximo = array[i + 1];
-        let incremento = (proximo - atual).toFixed(2); // Define o incremento como string para evitar imprecisões
-        
-        if (incremento > 0.01) { // Se houver um gap maior que 0.01
+        let incremento = (proximo - atual).toFixed(2); 
+        if (incremento > 0.01) { 
             let valorFaltante = (parseFloat(atual) + 0.01).toFixed(2);
             
             while (valorFaltante < proximo) {
-                faltantes.push(parseFloat(valorFaltante)); // Converte para número
+                faltantes.push(parseFloat(valorFaltante)); 
                 valorFaltante = (parseFloat(valorFaltante) + 0.01).toFixed(2);
             }
         }
     }
-    
     return faltantes;
-}
-  
-  
-
-  console.log(listaTaxa)
+  }
+  const lista = listaCash(start);
+  const listaTaxa = lista.flatMap(sumFee);
   const valoresAusentes = encontrarValoresFaltantes(listaTaxa)
+  console.log(listaTaxa)
   console.log(valoresAusentes)
 }
 
