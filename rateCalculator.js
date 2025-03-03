@@ -64,7 +64,7 @@ for (let i = 0.01; i<alvo;i= i+0.01 ){
 }
 
 //encapsulando código;
-function calculaValoresInexistentes(start) {
+function verificaGap(start) {
   function sumFee(input) {
     let intervals = [0.19];
     let fees = [0.02, 0.03, 0.04, 0.06, 0.07, 0.09];
@@ -86,7 +86,7 @@ function calculaValoresInexistentes(start) {
     return listaCents;
   }
 
-  function encontrarValoresFaltantes(array) {
+  function encontraGaps(array) {
     let faltantes = [];
     for (let i = 0; i < array.length - 1; i++) {
         let atual = array[i];
@@ -105,10 +105,11 @@ function calculaValoresInexistentes(start) {
   }
   const lista = listaCash(start);
   const listaTaxa = lista.flatMap(sumFee);
-  const valoresAusentes = encontrarValoresFaltantes(listaTaxa)
+  const valoresAusentes = encontraGaps(listaTaxa)
   console.log(listaTaxa)
   console.log(valoresAusentes)
+  console.log(valoresAusentes.includes(start))
 }
 
-calculaValoresInexistentes(2);
+verificaGap(0.43);
 
